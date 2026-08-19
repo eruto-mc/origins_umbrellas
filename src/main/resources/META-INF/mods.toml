@@ -1,0 +1,53 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="LGPL-3.0-only"
+issueTrackerURL="https://github.com/eruto-mc"
+
+[[mixins]]
+config="originsumbrellas.mixins.json"
+
+[[mods]]
+modId="originsumbrellas"
+version="${file.jarVersion}"
+displayName="Origins: Umbrellas"
+authors="Fusion_Flux, Cart3r (upstream) / erutobusiness (Forge port)"
+description='''
+Forge 1.20.1 port of Origins: Umbrellas by Fusion_Flux (upstream is Fabric-only, LGPL-3.0).
+
+An umbrella held in either hand keeps the weather off you, which matters because Apoli decides
+several origin powers from exactly those questions:
+
+  * apoli:exposed_to_sun and apoli:exposed_to_sky answer "no" while the umbrella is up, so a
+    sun-burning origin can cross open ground at noon.
+  * apoli:in_rain answers "no" as well. Vanilla reads the same method, so rain also stops
+    putting out fire, damaging Endermen, and so on while the umbrella is up.
+
+The umbrella soaks instead of breaking: one point of wet per ten ticks of rain, drying back off
+when you are out of it (faster in a warm biome, faster again when held or in the off-hand
+rather than buried in a bag). Fully soaked, it shelters nothing until it dries.
+
+Registers an item, so it has to be present on BOTH sides — the registry is synced on login.
+'''
+
+[[dependencies.originsumbrellas]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.originsumbrellas]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.20.2)"
+    ordering="NONE"
+    side="BOTH"
+
+# ⚠ apoli の version は "1.20.1-2.9.0.8"＝<MC版>-<MOD版> の形。Maven は先頭の数字から比べるので
+#   "[2.9,)" と書くと 1.20.1 < 2.9 で外れて起動が止まる（2026-08-20 に実際に踏んだ）。版で縛らない。
+[[dependencies.originsumbrellas]]
+    modId="apoli"
+    mandatory=true
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"

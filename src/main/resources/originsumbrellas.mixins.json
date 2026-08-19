@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.fusionflux.originsumbrellas.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "originsumbrellas.refmap.json",
+  "mixins": [
+    "EntityMixin",
+    "SimpleEntityConditionMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

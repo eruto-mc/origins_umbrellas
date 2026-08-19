@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.spongepowered:mixingradle:0.7.38'
+    }
+}
+
+plugins {
+    id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
+}
+
+apply plugin: 'org.spongepowered.mixin'
+
+version = '1.6.1-eruto1'
+group = 'com.fusionflux'
+base { archivesName = 'origins_umbrellas' }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+}
+
+mixin {
+    add sourceSets.main, 'originsumbrellas.refmap.json'
+    config 'originsumbrellas.mixins.json'
+}
+
+repositories {
+    // CurseForge の任意のファイルを取れる maven（ファイルIDで指す）。
+    maven { url = "https://cursemaven.com" }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    // Apoli 1.20.1-2.9.0.8。shifting_origins と同じファイルIDを指す。
+    // ⚠ **origins 本体は要らない**。当てているのは apoli の SimpleEntityCondition だけなので、
+    //    当部パッチ版（-eruto1）を libs/ に置く必要が無い＝clone しただけでビルドできる。
+    compileOnly "curse.maven:apoli-forge-975561:5404008"
+}
+
+jar {
+    manifest {
+        attributes([
+            'Specification-Title'   : 'origins_umbrellas',
+            'Specification-Version' : '1',
+            'Implementation-Title'  : 'Origins: Umbrellas (Forge port)',
+            'Implementation-Version': project.version,
+            'MixinConfigs'          : 'originsumbrellas.mixins.json'
+        ])
+    }
+}
